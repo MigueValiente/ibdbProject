@@ -18,3 +18,7 @@ Route::get('/about', 'PagesController@about')->name('about');
 
 // Rutas para la entidad Books
 Route::resource('/books', 'BooksController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

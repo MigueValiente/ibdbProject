@@ -1,9 +1,9 @@
-@extends('public.layout')
+@extends('layouts.app')
 
 @section('title', 'About IBDB')
 
 @section('content')
-<h1>Lista de libros</h1>
+<h1>Book List</h1>
 
     <div class="d-flex justify-content-center">
         {{ $books->links() }}
