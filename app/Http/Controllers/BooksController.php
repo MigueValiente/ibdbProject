@@ -13,6 +13,12 @@ class BooksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+      $this->middleware('auth',['only' => ['create','store','edit','update','destroy']
+    ]);
+    }
     public function index()
     {
         $books = Book::paginate(10);
@@ -42,7 +48,8 @@ class BooksController extends Controller
             'title' => request('title'),
             'slug' => str_slug(request('title'), "-"),
             'author' => request('author'),
-            'description' => request('description')
+            'description' => request('description'),
+            'user_id' => $request->user()->id //el id del usuario que esta logueado
         ]);
 
         return redirect('/');

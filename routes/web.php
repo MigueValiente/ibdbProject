@@ -13,11 +13,12 @@
 
 // Páginas estáticas
 Route::get('/', 'PagesController@index')->name('root');
-Route::get('/contact', 'PagesController@contact')->name('contact');
+Route::get('/contact', 'PagesController@contact')->name('contact')->middleware('auth');
 Route::get('/about', 'PagesController@about')->name('about');
 
 // Rutas para la entidad Books
 Route::resource('/books', 'BooksController');
+Route::resource('/user', 'userBooksController');
 
 Auth::routes();
 

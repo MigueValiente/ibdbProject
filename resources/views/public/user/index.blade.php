@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'About IBDB')
+@section('title', 'Custom Books')
 
 @section('content')
-<h1>Book List</h1>
+<h1>{{$book->user->name}} Books</h1>
 
     <div class="d-flex justify-content-center">
         {{ $books->links() }}
@@ -27,7 +27,7 @@
             @endauth
             <a href="/books/{{ $book->slug }}" class="btn btn-primary btn-sm mr-2 float-right">More Info</a>
             @auth
-            <a href="/books/{{ $book->id }}/edit" class="btn btn-warning btn-sm mr-2     float-right">Edit</a>
+            <a href="/books/{{ $book->id }}/edit" class="btn btn-warning btn-sm mr-2 float-right">Edit</a>
             @endauth
 
       </div>
