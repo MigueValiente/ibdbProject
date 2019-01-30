@@ -46,9 +46,11 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        @auth
                         <li class="nav-item">
                             <a class="nav-link" href="/contact">Contact</a>
                         </li>
+                        @endauth
                         <li class="nav-item">
                             <a class="nav-link" href="/about">About</a>
                         </li>
@@ -85,11 +87,13 @@
                 </div>
             </div>
         </nav>
+
         <div class="container">
-        <main class="py-4">
-            @yield('content')
-        </main>
+            <main class="py-4">
+                @yield('content')
+            </main>
         </div>
+
     </div>
 </body>
 </html>
