@@ -11,9 +11,13 @@ class userBooksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($slug)
     {
-        //
+      $user = User::where('slug',$slug)->firstOrFail();
+      $books = $user->books();
+      $books = Book::paginate(10);
+
+      return view('public.user.index')->withBooks($books);
     }
 
     /**
@@ -43,12 +47,9 @@ class userBooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($name)
+    public function show($slug)
     {
-      $user = User::where('name',$name)->firstOrFail();
-      $books = $user->books();
 
-      return view('public.user.index')->withBooks($books);
     }
 
     /**
