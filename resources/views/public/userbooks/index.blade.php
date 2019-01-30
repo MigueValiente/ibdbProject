@@ -3,7 +3,7 @@
 @section('title', 'About IBDB')
 
 @section('content')
-<h1>Book List</h1>
+<h1>{{ $user->name }}'s Book List</h1>
 
     <div class="d-flex justify-content-center">
         {{ $books->links() }}
@@ -15,7 +15,7 @@
             {{ $book->title }}
         </div>
         <div class="card-body">
-            <h5 class="card-title"><a href="{{ route('userbooks.index', $book->user->slug) }}" title="{{ $book->user->name }}'s book list">{{ $book->user->name }}</a></h5>
+            <h5 class="card-title">{{ $book->user->name }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">{{ $book->author}}</h6>
             <p class="card-text">{{ str_limit($book->description, 300) }}</p>
 
