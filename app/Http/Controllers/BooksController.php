@@ -8,13 +8,6 @@ use App\Http\Requests\BookRequest;
 
 class BooksController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth', [
-            'only' => ['create' , 'store', 'edit', 'update', 'destroy']
-        ]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -56,7 +49,6 @@ class BooksController extends Controller
             'title' => request('title'),
             'slug' => str_slug(request('title'), "-"),
             'author' => request('author'),
-            'description' => request('description')
             'description' => request('description'),
             'user_id' => $request->user()->id //el id del usuario que esta logueado
         ]);
