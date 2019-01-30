@@ -3,7 +3,7 @@
 @section('title', 'Custom Books')
 
 @section('content')
-<h1>{{$book->user->name}} Books</h1>
+<h1>{{$user->name}} 's Book List</h1>
 
     <div class="d-flex justify-content-center">
         {{ $books->links() }}

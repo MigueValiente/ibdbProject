@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class userBooksController extends Controller
 {
@@ -14,10 +15,12 @@ class userBooksController extends Controller
     public function index($slug)
     {
       $user = User::where('slug',$slug)->firstOrFail();
-      $books = $user->books();
-      $books = Book::paginate(10);
+      $books = $user->books()->paginate(10);
 
-      return view('public.user.index')->withBooks($books);
+      return view('public.user.index',[
+        'user' => $user,
+        'books' => $books
+      ]);
     }
 
     /**
