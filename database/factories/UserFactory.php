@@ -17,12 +17,12 @@ $factory->define(App\User::class, function (Faker $faker) {
     $name = $faker->name;
 
     return [
-        'name' => $name,
-        'slug' => str_slug($name),
+        'name' => $faker->name,
+        'slug' => str_slug('name', "-"),
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-        'avatar' => 'http://lorempixel.com/400/400/people/'.random_int(1,1000),
+        'avatar' => $faker->imageUrl(400,400,'people'),
         'remember_token' => str_random(10),
     ];
 });
