@@ -20,6 +20,8 @@ Route::get('/about', 'PagesController@about')->name('about');
 Route::resource('/books', 'BooksController');
 Route::get('/users/{user}/books', 'userBooksController@index')->name('user.index');
 
+Route::resource('/publishers', 'PublisherController');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
