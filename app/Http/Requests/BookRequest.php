@@ -26,6 +26,7 @@ class BookRequest extends FormRequest
         return [
             'title'         => 'required|min:3',
             'author'        => ['required','min:3'],
+            'publisher'     => 'required|exists:publishers,id',
             'description'    => 'required'
         ];
     }
@@ -37,6 +38,8 @@ class BookRequest extends FormRequest
             'title.min' => 'El :attribute debe tener al menos 3 caracteres',
             'author.required'=> 'El :attribute es requerido.',
             'author.min'    => 'El :attribute debe tener al menos 3 caracteres',
+            'publisher.required' =>'Debe elegir una :attribute',
+            'publisher.exists'    => 'La :attribute no existe',
             'description.required'=> 'La :attribute es requerida.',
         ];
     }
@@ -46,6 +49,7 @@ class BookRequest extends FormRequest
         return [
             'title'     => 'título del libro',
             'author'    => 'autor del libro',
+            'publisher' => 'editorial',
             'description' => 'descripción del libro'
         ];
     }

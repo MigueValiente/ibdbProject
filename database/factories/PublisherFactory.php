@@ -8,7 +8,7 @@ $factory->define(App\Publisher::class, function (Faker $faker) {
       'name'  => $publisherName,
       'slug'  => str_slug($publisherName,'-'),
       'address'  => $faker->address,
-      'web'      => $faker->url(),
+      'web'      => $faker->domainName,
       'email'    => $faker->companyEmail
     ];
 });

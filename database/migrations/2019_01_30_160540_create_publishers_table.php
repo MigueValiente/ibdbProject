@@ -15,11 +15,11 @@ class CreatePublishersTable extends Migration
     {
         Schema::create('publishers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->string('address');
-            $table->string('web');
-            $table->string('email');
+            $table->string('address')->unique();
+            $table->string('web')->unique();
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }

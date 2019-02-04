@@ -17,6 +17,19 @@
     @endif
 </div>
 <div class="form-group">
+    <label for="publisher">Publisher</label>
+    <select class="form-control {{ $errors->has('publisher')?"is-invalid":"" }}" id="publisher" name="publisher">
+      @foreach($publishers as $publisher)
+        <option value="{{ $publisher->id }}" {{ (isset($book) && $errors->isEmpty()?"selected":$publisher->id==old('publisher')?"selected":"") }}>{{ $publisher->name }}</option>
+      @endforeach
+    </select>
+    @if( $errors->has('publisher'))
+    <div class="invalid-feedback">
+        {{ $errors->first('publisher') }}
+    </div>
+    @endif
+  </div>
+<div class="form-group">
     <label for="description">Description</label>
     <textarea class="form-control {{ $errors->has('description')?"is-invalid":"" }}" id="description" name="description" rows="10" placeholder="Book Description" required>{{ isset($book)?$book->description:old('description') }}</textarea>
     @if( $errors->has('description'))
