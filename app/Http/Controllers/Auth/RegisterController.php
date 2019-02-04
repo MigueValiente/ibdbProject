@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use App\Http\Requests\UserFormRequest;
+use App\Http\Requests\UserAjaxFormRequest;
 
 class RegisterController extends Controller
 {
@@ -55,19 +58,24 @@ class RegisterController extends Controller
         ]);
     }
 
+    protected function validacionUsuarioAjax(UserAjaxFormRequest $request)
+    {
+      return array();
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create(UserFormRequest $request)
     {
         return User::create([
-            'name' => $data['name'],
-            'slug' => str_slug($data['name'],'-'),
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name' => $request->input('name'),
+            'slug' => str_slug($request->input('name'),'-'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
         ]);
     }
 }

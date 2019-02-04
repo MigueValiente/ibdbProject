@@ -24,4 +24,6 @@ Route::resource('/publishers', 'PublisherController');
 
 Auth::routes();
 
+Route::post('register/validar', 'Auth\RegisterController@validacionUsuarioAjax');
+
 Route::get('/home', 'HomeController@index')->name('home');

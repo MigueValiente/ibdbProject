@@ -1,0 +1,6 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/js/validaciones/bookValidation.js": "/js/validaciones/bookValidation.js",
+    "/js/validaciones/registerValidation.js": "/js/validaciones/registerValidation.js"
+}

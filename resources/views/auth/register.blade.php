@@ -75,3 +75,6 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+    <script src="{{ mix('/js/validaciones/registerValidation.js') }}" defer ></script>
+@endpush
