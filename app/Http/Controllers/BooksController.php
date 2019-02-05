@@ -97,7 +97,7 @@ class BooksController extends Controller
             'title' => request('title'),
             'slug' => str_slug(request('title'), "-"),
             'author' => request('author'),
-            'publisher' => request('publisher'),
+            'publisher_id' => request('publisher'),
             'description' => request('description')
         ]);
 

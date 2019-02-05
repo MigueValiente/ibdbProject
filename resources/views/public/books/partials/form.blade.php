@@ -20,7 +20,13 @@
     <label for="publisher">Publisher</label>
     <select class="form-control {{ $errors->has('publisher')?"is-invalid":"" }}" id="publisher" name="publisher">
       @foreach($publishers as $publisher)
-        <option value="{{ $publisher->id }}" {{ (isset($book) && $errors->isEmpty()?"selected":$publisher->id==old('publisher')?"selected":"") }}>{{ $publisher->name }}</option>
+        <option value="{{ $publisher->id }}"
+          @if(!$errors->isEmpty())
+            {{old('publisher') == $publisher->id?" selected":""}}
+          @elseif (isset($book))
+            {{$publisher->id == $book->publisher_id?" selected":""}}
+          @endif
+        >{{ $publisher->name }}</option>
       @endforeach
     </select>
     @if( $errors->has('publisher'))
@@ -28,6 +34,8 @@
         {{ $errors->first('publisher') }}
     </div>
     @endif
+    <a href="{{route('publishers.create')}}" target="_blank">New Publisher</a>
+
   </div>
 <div class="form-group">
     <label for="description">Description</label>

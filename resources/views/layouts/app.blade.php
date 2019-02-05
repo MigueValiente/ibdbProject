@@ -49,7 +49,7 @@
                             Publishers
                           </a>
                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <!-- <a class="dropdown-item" href="{{ route('books.index') }}">List</a> -->
+                            <a class="dropdown-item" href="{{ route('publishers.index') }}">List</a>
                             @auth
                             <a class="dropdown-item" href="{{ route('publishers.create') }}">Create</a>
                             @endauth
