@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function validarNombre(){
   axios.post('/register/validar',{
-    name: $('name').val()
+    name: $('#name').val()
   }).then(function(response){
       console.log(response.data);
   }).cath(function(error){

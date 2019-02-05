@@ -23,4 +23,13 @@ class PagesController extends Controller
     {
       return view('public.pages.about');
     }
+
+    public function profile()
+    {
+      return view('public.profile.index');
+    }
+
+    public function tabAxios(){
+      return false;
+    }
 }

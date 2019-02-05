@@ -81,44 +81,41 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/validaciones/registerValidation.js":
-/*!*********************************************************!*\
-  !*** ./resources/js/validaciones/registerValidation.js ***!
-  \*********************************************************/
+/***/ "./resources/js/navs.js":
+/*!******************************!*\
+  !*** ./resources/js/navs.js ***!
+  \******************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-document.addEventListener("DOMContentLoaded", function (event) {
-  alert("Se ha cargado el DOM xiabalhes");
-  $("#name").on("change", validarNombre);
-});
-
-function validarNombre() {
-  axios.post('/register/validar', {
-    name: $('#name').val()
-  }).then(function (response) {
-    console.log(response.data);
-  }).cath(function (error) {
-    alert("Ha Habido un Error");
-    console.log(error);
+$(function () {
+  $('#myTabPill a').on('show.bs.tab', function (e) {
+    axios.get('/profile/validar', {
+      tab: e.target.id
+    }).then(function (response) {
+      console.log(response);
+    }).cath(function (error) {
+      alert("Ha Habido un Error");
+      console.log(error);
+    });
   });
-}
+});
 
 /***/ }),
 
-/***/ 2:
-/*!***************************************************************!*\
-  !*** multi ./resources/js/validaciones/registerValidation.js ***!
-  \***************************************************************/
+/***/ 3:
+/*!************************************!*\
+  !*** multi ./resources/js/navs.js ***!
+  \************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/migue/Sites/ibdbProject/resources/js/validaciones/registerValidation.js */"./resources/js/validaciones/registerValidation.js");
+module.exports = __webpack_require__(/*! /home/migue/Sites/ibdbProject/resources/js/navs.js */"./resources/js/navs.js");
 
 
 /***/ })
