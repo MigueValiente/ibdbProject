@@ -26,7 +26,7 @@ class UserFormRequest extends FormRequest
         $rules = array();
 
         $rules['name'] = $this->validarNombre();
-        // $rules['email'] = $this->validarEmail();
+        $rules['email'] = $this->validarEmail();
 
         return $rules;
     }
@@ -34,8 +34,9 @@ class UserFormRequest extends FormRequest
     public function messages()
     {
         $mensajesNombre = $this->mensajeNombre();
+        $mensajesEmail = $this->mensajesEmail();
 
-        $mensajes = array_merge($mensajesNombre);
+        $mensajes = array_merge($mensajesNombre,$mensajesEmail);
         return $mensajes;
     }
 
@@ -44,10 +45,10 @@ class UserFormRequest extends FormRequest
       return 'required|string|max:10';
     }
 
-    // protected  function validarEmail()
-    // {
-    //   return 'required|email';
-    // }
+    protected  function validarEmail()
+    {
+      return 'required|email';
+    }
 
     protected function mensajeNombre()
     {
@@ -59,8 +60,12 @@ class UserFormRequest extends FormRequest
       return $mensajes;
     }
 
-    // protected function mensajesEmail()
-    // {
-    //
-    // }
+    protected function mensajesEmail()
+    {
+      $mensajes = array();
+      $mensajes['email.required']="El email es requerido";
+      $mensajes['email.email']="El email no cumple con el formato requerido";
+
+      return $mensajes;
+    }
 }

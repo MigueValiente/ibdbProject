@@ -96,16 +96,109 @@
 document.addEventListener("DOMContentLoaded", function (event) {
   alert("Se ha cargado el DOM xiabalhes");
   $("#name").on("change", validarNombre);
+  $("#email").on("change", validarEmail);
 });
 
 function validarNombre() {
   axios.post('/register/validar', {
     name: $('#name').val()
   }).then(function (response) {
-    console.log(response.data);
-  }).cath(function (error) {
+    gestionarErrores($('#name'), response.data.name);
+  }).catch(function (error) {
     alert("Ha Habido un Error");
     console.log(error);
+  });
+}
+
+function validarEmail() {
+  axios.post('/register/validar', {
+    email: $('#email').val()
+  }).then(function (response) {
+    gestionarErrores($('#email'), response.data.email);
+  }).catch(function (error) {
+    alert("Ha Habido un Error");
+    console.log(error);
+  });
+}
+
+function gestionarErrores(input, errores) {
+  var hayErrores = false;
+  var divErrores = input.next();
+  divErrores.html("");
+  input.removeClass("bg-success bg-danger");
+
+  if (errores.length === 0) {
+    input.addClass("bg-success");
+  } else {
+    hayErrores = true;
+    input.addClass("bg-danger");
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = errores[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var error = _step.value;
+        divErrores.append("<div>" + error + "</div>");
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return != null) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+  } //Para quitar el spinner
+  // input.parent().next().remove();
+
+
+  return hayErrores;
+}
+
+function validarFormularioAxios() {
+  var datosFormularios = $("#formulario").serialize;
+  axios.post("/register/validar", {
+    datosFormularios: datosFormularios
+  }).then(function (response) {
+    var formularioCorrecto = true;
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+      for (var _iterator2 = response.data[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var campo = _step2.value;
+
+        if (!gestionarErrores($("#".concat(campo)), response.data[$campo])) {
+          formularioCorrecto = false;
+        }
+      }
+    } catch (err) {
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+          _iterator2.return();
+        }
+      } finally {
+        if (_didIteratorError2) {
+          throw _iteratorError2;
+        }
+      }
+    }
+
+    if (formularioCorrecto) {
+      var formulario = document.getElementById("formulario");
+      formulario.submit;
+    }
   });
 }
 

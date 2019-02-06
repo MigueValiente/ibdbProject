@@ -19,6 +19,10 @@ class UserAjaxFormRequest extends UserFormRequest
           $rules['name'] = $this->validarNombre();
         }
 
+        if($this->exists('email')){
+          $rules['email'] = $this->validarEmail();
+        }
+
         return $rules;
     }
 
@@ -26,7 +30,8 @@ class UserAjaxFormRequest extends UserFormRequest
     {
         $errors = $validator->errors();
         $response = new JsonResponse([
-          'name' => $errors->get('name')
+          'name' => $errors->get('name'),
+          'email' => $errors->get('email')
         ]);
 
         throw new ValidationException($validator,$response);
