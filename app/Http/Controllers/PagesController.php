@@ -32,4 +32,21 @@ class PagesController extends Controller
     public function tabAxios(){
       return false;
     }
+
+    public function obtenerVista($tab){
+      $vista = "";
+      switch ($tab) {
+        case 'profile-pill':
+          $vista = view('public.profile.data');
+          break;
+        case 'books-pill':
+          $vista = view('public.profile.myBooks');
+          break;
+        case 'friends-pill':
+          $vista = view('public.profile.friends');
+          break;
+        default:
+          break;
+      }
+    }
 }

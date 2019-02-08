@@ -17,6 +17,7 @@ Route::get('/contact', 'PagesController@contact')->name('contact')->middleware('
 Route::get('/about', 'PagesController@about')->name('about');
 Route::get('/profile', 'PagesController@profile')->name('profile');
 Route::get('/profile/validar', 'PagesController@tabAxios');
+Route::get('/obtenerVista/{idTab}', 'PagesController@obtenerVista');
 
 // Rutas para la entidad Books
 Route::resource('/books', 'BooksController');
