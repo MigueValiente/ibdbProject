@@ -81,57 +81,86 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/validaciones/registerValidation.js":
+/***/ "./resources/js/validaciones/validacionRegistro.js":
 /*!*********************************************************!*\
-  !*** ./resources/js/validaciones/registerValidation.js ***!
+  !*** ./resources/js/validaciones/validacionRegistro.js ***!
   \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-document.addEventListener("DOMContentLoaded", function (event) {
-  alert("Se ha cargado el DOM xiabalhes");
-  $("#name").on("change", validarNombre);
-  $("#email").on("change", validarEmail);
+document.addEventListener('DOMContentLoaded', function () {
+  asociarEventos();
 });
 
-function validarNombre() {
-  axios.post('/register/validar', {
-    name: $('#name').val()
-  }).then(function (response) {
-    gestionarErrores($('#name'), response.data.name);
-  }).catch(function (error) {
-    alert("Ha Habido un Error");
-    console.log(error);
+function asociarEventos() {
+  var inputName = document.getElementById('name');
+  inputName.addEventListener('change', function (event) {
+    validarCampo(event.target);
+  });
+  var inputEmail = document.getElementById('email');
+  inputEmail.addEventListener('change', function (event) {
+    validarCampo(event.target);
+  });
+  var inputPassword = document.getElementById('password');
+  var inputPasswordConfirm = document.getElementById('password_confirmation');
+  inputPassword.addEventListener('change', function (event) {
+    validarCampo(inputPassword);
+  });
+  inputPasswordConfirm.addEventListener('change', function (event) {
+    validarPassIguales(inputPassword, inputPasswordConfirm);
+  });
+  var form = document.getElementById('formulario');
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    validarFormulario(event.target);
   });
 }
 
-function validarEmail() {
-  axios.post('/register/validar', {
-    email: $('#email').val()
-  }).then(function (response) {
-    gestionarErrores($('#email'), response.data.email);
+function validarCampo(input) {
+  var datosPost = {};
+  datosPost[input.name] = input.value;
+  mostrarSpinner(input);
+  axios.post('/register/validar', datosPost).then(function (response) {
+    tieneErrores(input, response.data[input.name]);
   }).catch(function (error) {
-    alert("Ha Habido un Error");
     console.log(error);
+  }).then(function () {
+    esconderSpinner(input);
   });
 }
 
-function gestionarErrores(input, errores) {
+function validarPassIguales(inputPass, inputPassConfirm) {
+  var datosPost = {};
+  datosPost[inputPass.name] = inputPass.value;
+  datosPost[inputPassConfirm.name] = inputPassConfirm.value;
+  mostrarSpinner(inputPassConfirm);
+  axios.post('/register/validar', datosPost).then(function (response) {
+    tieneErrores(inputPassConfirm, response.data[inputPassConfirm.name]);
+  }).catch(function (error) {
+    console.log(error);
+  }).then(function () {
+    esconderSpinner(inputPassConfirm);
+  });
+}
+
+function tieneErrores(input, errores) {
   var hayErrores = false;
-  var divErrores = input.next();
+  var divErrores = $(input).next();
   divErrores.html("");
-  input.removeClass("bg-success bg-danger");
+  $(input).removeClass("is-invalid is-valid");
+  /*Si es undefined o esta vacío, 
+  significa que no hay errores en dicho campo*/
 
-  if (errores.length === 0) {
-    input.addClass("bg-success");
+  if (errores === undefined || errores.length === 0) {
+    $(input).addClass("is-valid");
   } else {
     hayErrores = true;
-    input.addClass("bg-danger");
+    $(input).addClass("is-invalid");
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
@@ -139,7 +168,7 @@ function gestionarErrores(input, errores) {
     try {
       for (var _iterator = errores[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var error = _step.value;
-        divErrores.append("<div>" + error + "</div>");
+        divErrores.append("<div>".concat(error, "</div>"));
       }
     } catch (err) {
       _didIteratorError = true;
@@ -155,61 +184,54 @@ function gestionarErrores(input, errores) {
         }
       }
     }
-  } //Para quitar el spinner
-  // input.parent().next().remove();
-
+  }
 
   return hayErrores;
 }
 
-function validarFormularioAxios() {
-  var datosFormularios = $("#formulario").serialize;
-  axios.post("/register/validar", datosFormularios).then(function (response) {
+function mostrarSpinner(input) {
+  $(input).parent().next().removeClass("invisible");
+}
+
+function esconderSpinner(input) {
+  $(input).parent().next().addClass("invisible");
+}
+
+function validarFormulario(form) {
+  var datosPost = $(form).serialize();
+  axios.post('/register/validar', datosPost).then(function (response) {
     var formularioCorrecto = true;
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
 
-    try {
-      for (var _iterator2 = response.data[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-        var campo = _step2.value;
+    if (response.data !== undefined) {
+      for (campo in response.data) {
+        var input = document.getElementsByName(campo)[0];
 
-        if (!gestionarErrores($("#".concat(campo)), response.data[$campo])) {
+        if (tieneErrores(input, response.data[campo])) {
           formularioCorrecto = false;
-        }
-      }
-    } catch (err) {
-      _didIteratorError2 = true;
-      _iteratorError2 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-          _iterator2.return();
-        }
-      } finally {
-        if (_didIteratorError2) {
-          throw _iteratorError2;
         }
       }
     }
 
     if (formularioCorrecto) {
-      var formulario = document.getElementById("formulario");
-      formulario.submit;
+      form.submit();
     }
+  }).catch(function (error) {
+    console.log(error);
+  }).then(function () {
+    console.log("termino");
   });
 }
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!***************************************************************!*\
-  !*** multi ./resources/js/validaciones/registerValidation.js ***!
+  !*** multi ./resources/js/validaciones/validacionRegistro.js ***!
   \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/migue/Sites/ibdbProject/resources/js/validaciones/registerValidation.js */"./resources/js/validaciones/registerValidation.js");
+module.exports = __webpack_require__(/*! /home/migue/Sites/ibdbProject/resources/js/validaciones/validacionRegistro.js */"./resources/js/validaciones/validacionRegistro.js");
 
 
 /***/ })

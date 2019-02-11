@@ -18,6 +18,8 @@ Route::get('/about', 'PagesController@about')->name('about');
 Route::get('/profile', 'PagesController@profile')->name('profile');
 Route::get('/profile/validar', 'PagesController@tabAxios');
 Route::get('/obtenerVista/{idTab}', 'PagesController@obtenerVista');
+Route::post('/books/crearLibroAjax','BooksController@crearLibroAjax');
+Route::get('/books/nuevoFormulario','BooksController@nuevoFormulario');
 
 // Rutas para la entidad Books
 Route::resource('/books', 'BooksController');
@@ -28,6 +30,8 @@ Route::resource('/publishers', 'PublisherController');
 Auth::routes();
 
 Route::post('register/validar', 'Auth\RegisterController@validacionUsuarioAjax');
+Route::post('register/nuevo', 'Auth\RegisterController@create');
+
 
 
 

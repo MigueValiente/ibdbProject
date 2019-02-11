@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Book;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
+use App\Http\Requests\BookRequestAjax;
 use App\Publisher;
 
 class BooksController extends Controller
@@ -114,5 +115,25 @@ class BooksController extends Controller
         $book->delete();
 
         return redirect('/');
+    }
+
+    public function crearLibroAjax(BookRequestAjax $request){
+
+      $book = Book::create([
+            'user_id' => $request->user()->id,
+            'publisher_id' => $request->publisher,
+            'title' => request('title'),
+            'slug' => str_slug(request('title'), "-"),
+            'description' => request('description'),
+            'user_id' => $request->user()->id //el id del usuario que esta logueado
+        ]);
+
+
+        return view("public.books.partials.bookData",['book' => $book]);
+    }
+
+    public function nuevoFormulario(){
+        $publishers = Publisher::all();
+        return view('public.books.partials.form', ['publishers' => $publishers]);
     }
 }
