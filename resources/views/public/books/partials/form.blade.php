@@ -13,7 +13,7 @@
       @foreach($authors as $author)
         <option value="{{ $author->id }}"
           @if(!$errors->isEmpty())
-            {{in_array($author->id,old('author') )?" selected":""}}
+            {{in_array($author->id,old('author') ?? [])?" selected":""}}
           @elseif (isset($book))
             {{$book->authors->contains($author->id)?" selected":""}}
           @endif
