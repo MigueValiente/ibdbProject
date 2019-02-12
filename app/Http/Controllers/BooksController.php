@@ -136,4 +136,11 @@ class BooksController extends Controller
         $publishers = Publisher::all();
         return view('public.books.partials.form', ['publishers' => $publishers]);
     }
+
+    public function deleteAjax($id){
+        $book = Book::where("id",$id)->firstOrFail();
+
+        $book->delete();
+        return $book->title;
+    }
 }

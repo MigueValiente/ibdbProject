@@ -10,7 +10,7 @@
     </div>
 
     @forelse($books as $book)
-    <div class="card mb-2">
+    <div class="card mb-2" data-bookId="{{$book->id}}">
         <div class="card-header">
             {{ $book->title }}
         </div>
@@ -22,7 +22,7 @@
 
             @auth
             {{-- <a href="/books/{{ $book->id }}/edit" class="btn btn-warning btn-sm mr-2 float-right">Edit</a> --}}
-            <form action="/books/{{ $book->id }}" method="post" class="mr-2 float-right">
+            <form action="/books/{{ $book->id }}" method="post" id="deleteForm" data-bookId="{{$book->id}}" data-accion="delete" class="mr-2 float-right">
                 @csrf
                 @method('delete')
                 <button type="submit" class="btn btn-danger btn-sm">Delete Book</button>
@@ -42,4 +42,8 @@
     <div class="d-flex justify-content-center">
         {{ $books->links() }}
     </div>
+    @include("public.books.partials.modal")
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/otherScripts/modalScript.js') }}"></script>
+@endpush

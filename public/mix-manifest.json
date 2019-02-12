@@ -2,6 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/navs.js": "/js/navs.js",
+    "/js/otherScripts/modalScript.js": "/js/otherScripts/modalScript.js",
     "/js/validaciones/bookValidation.js": "/js/validaciones/bookValidation.js",
     "/js/validaciones/registerValidation.js": "/js/validaciones/registerValidation.js",
     "/js/validaciones/validacionRegistro.js": "/js/validaciones/validacionRegistro.js"
