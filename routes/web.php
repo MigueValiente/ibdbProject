@@ -21,6 +21,7 @@ Route::get('/obtenerVista/{idTab}', 'PagesController@obtenerVista');
 Route::post('/books/crearLibroAjax','BooksController@crearLibroAjax');
 Route::get('/books/nuevoFormulario','BooksController@nuevoFormulario');
 Route::delete('/books/borrarAjax/{idLibro}','BooksController@deleteAjax');
+Route::post('/books/buscarLibrosAjax','BooksController@buscar');
 
 // Rutas para la entidad Books
 Route::resource('/books', 'BooksController');

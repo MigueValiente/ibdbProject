@@ -143,4 +143,10 @@ class BooksController extends Controller
         $book->delete();
         return $book->title;
     }
+
+    public function buscar(){
+            $books = Book::join('author_book','id','=','book_id')->join('authors','author_book.author_id','author_book.author_id')->where('title','like',"%".request('inputBuscador')."%")->orWhere('authors.name','like',"%".request('inputBuscador')."%")->get();
+
+        return view('public.books.partials.bookFormat', ['books' => $books]);
+    }
 }
