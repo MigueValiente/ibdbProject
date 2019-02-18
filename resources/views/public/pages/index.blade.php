@@ -50,7 +50,7 @@
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img class="img-fluid w-100" src="http://lorempixel.com/900/300/food/1" alt="Primera imagen">
+            <img class="img-fluid w-100" src="http://lorempixel.com/900/300/food/1n" alt="Primera imagen">
             <div class="carousel-caption d-none d-md-block">
                 <h5>Primera Imagen</h5>
                 <p>Imagen de Prueba de Comida</p>
