@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Publisher;
 use Illuminate\Http\Request;
+use App\Http\Requests\PublisherRequest;
 
 class PublisherController extends Controller
 {
@@ -11,9 +13,18 @@ class PublisherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+     public function __construct()
+     {
+       $this->middleware('auth',['only' => ['create','store','edit','update','destroy']
+     ]);
+     }
+
     public function index()
     {
-        //
+        $publishers = Publisher::paginate(10);
+        return view('public.publishers.index', compact('publishers'));
     }
 
     /**
@@ -23,7 +34,7 @@ class PublisherController extends Controller
      */
     public function create()
     {
-        //
+        return view('public.publishers.create');
     }
 
     /**
@@ -32,9 +43,17 @@ class PublisherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PublisherRequest $request)
     {
-        //
+      Publisher::create([
+          'name' => request('name'),
+          'slug' => str_slug(request('name'),'-'),
+          'web' => request('web'),
+          'address' => request('address'),
+          'email' => request('email'),
+      ]);
+
+      return redirect('/');
     }
 
     /**
@@ -43,9 +62,11 @@ class PublisherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+      $publisher = Publisher::where('slug', $slug)->firstOrFail();
+
+      return view('public.publishers.show', ['publisher' => $publisher]);
     }
 
     /**
@@ -54,9 +75,9 @@ class PublisherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Publisher $publisher)
     {
-        //
+        return view('public.publishers.edit',compact('publisher'));
     }
 
     /**
@@ -66,9 +87,17 @@ class PublisherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PublisherRequest $request, Publisher $publisher)
     {
-        //
+      $publisher->update([
+          'name' => request('name'),
+          'slug' => str_slug(request('name'), "-"),
+          'address' => request('address'),
+          'web' => request('web'),
+          'email' => request('email')
+      ]);
+
+      return redirect('/publishers/'.$publisher->slug);
     }
 
     /**
@@ -77,8 +106,10 @@ class PublisherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Publisher $publisher)
     {
-        //
+      $publisher->delete();
+
+      return redirect('/');
     }
 }
