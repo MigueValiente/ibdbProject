@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
 use App\Publisher;
 use App\Author;
+use Illuminate\Contracts\Auth\Access\Gate;
 
 class BooksController extends Controller
 {
@@ -18,8 +19,11 @@ class BooksController extends Controller
 
     public function __construct()
     {
-      $this->middleware('auth',['only' => ['create','store','edit','update','destroy']
-    ]);
+
+        $this->middleware('auth',['only' => ['create','store','edit','update','destroy']
+        ]);
+
+        //$this->middleware('can:touch,book', ['only' => ['edit','update','destroy']]);
     }
     public function index()
     {
@@ -83,6 +87,18 @@ class BooksController extends Controller
      */
     public function edit(Book $book)
     {
+
+        //abort_unless( auth()->user()->owns($book), 403 );
+
+        //$this->authorize('touch', $book);
+
+        //abort_unless(\Gate::allows('touch',$book), 403);
+
+        if(auth()->user()->cannot('touch', $book)){
+            abort(403);
+        }
+
+
         $publishers = Publisher::all();
         $authors = Author::all();
         return view('public.books.edit', ['book' => $book,'publishers' => $publishers,'authors' => $authors]);
@@ -117,6 +133,11 @@ class BooksController extends Controller
      */
     public function destroy(Book $book)
     {
+
+        if(auth()->user()->cannot('touch', $book)){
+            abort(403);
+        }
+        
         $book->authors()->detach();
         $book->delete();
 

@@ -32,4 +32,9 @@ class User extends Authenticatable
     {
       return $this->hasMany(Book::class);
     }
+
+    public function owns(Book $book)
+    {
+        return $this->id == $book->user_id;
+    }
 }
