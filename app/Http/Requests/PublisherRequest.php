@@ -24,33 +24,33 @@ class PublisherRequest extends FormRequest
     public function rules()
     {
       return [
-          'name'         => 'required|min:5',
-          'address'        => ['required','min:10'],
-          'web'    => 'required',
-          'email' => 'required|email'
+          'name'      => 'required|min:5',
+          'address'   => ['required','min:10'],
+          'web'       => 'required',
+          'email'     => 'required|email'
       ];
     }
 
     public function messages()
     {
         return [
-            'name.required'=> 'El :attribute es requerido.',
-            'name.min' => 'El :attribute debe tener al menos 5 caracteres',
-            'address.required'=> 'El :attribute es requerido.',
-            'address.min'    => 'El :attribute debe tener al menos 10 caracteres',
-            'web.required'=> 'La :attribute es requerida.',
-            'email.required'=> 'El :attribute es requerido',
-            'email.email' => 'El :attribute no cumple con los requisitos'
+            'name.required'     => 'El :attribute es requerido.',
+            'name.min'          => 'El :attribute debe tener al menos 5 caracteres',
+            'address.required'  => 'El :attribute es requerido.',
+            'address.min'       => 'El :attribute debe tener al menos 10 caracteres',
+            'web.required'      => 'La :attribute es requerida.',
+            'email.required'    => 'El :attribute es requerido',
+            'email.email'       => 'El :attribute no cumple con los requisitos'
         ];
     }
 
     public function attributes()
     {
         return [
-            'name'     => 'nombre de la editorial',
-            'address'    => 'direccion',
-            'web' => 'url',
-            'email' => 'email'
+            'name'      => 'nombre de la editorial',
+            'address'   => 'direccion',
+            'web'       => 'url',
+            'email'     => 'email'
         ];
     }
 }

@@ -8,6 +8,70 @@
         </div>
         @endif
     </div>
+<<<<<<< HEAD
+    @endif
+</div>
+<div class="form-group">
+    <label for="author">Author</label>
+    <select multiple class="form-control {{ $errors->has('author')?"is-invalid":"" }}" id="author" name="author[]">
+      @foreach($authors as $author)
+        <option value="{{ $author->id }}"
+          @if(!$errors->isEmpty())
+            {{in_array($author->id,old('author') ?? [])?" selected":""}}
+          @elseif (isset($book))
+            {{$book->authors->contains($author->id)?" selected":""}}
+          @endif
+        >{{ $author->name }}</option>
+      @endforeach
+    </select>
+    @if( $errors->has('author'))
+    <div class="invalid-feedback">
+        {{ $errors->first('author') }}
+    </div>
+    @endif
+  </div>
+{{-- <div class="form-group">
+    <label for="author">Author</label>
+    <input type="text" class="form-control {{ $errors->has('author')?"is-invalid":"" }}" id="author" name="author" placeholder="Introduce the book author" value="{{ isset($book)?$book->author:old('author') }}"required>
+    @if( $errors->has('author'))
+    <div class="invalid-feedback">
+        {{ $errors->first('author') }}
+    </div>
+    @endif
+</div> --}}
+<div class="form-group">
+  <div class="row d-flex align-items-end">
+    <div class="col-10">
+      <label for="publisher">Publisher</label>
+      <select class="form-control {{ $errors->has('publisher')?"is-invalid":"" }}" id="publisher" name="publisher">
+        @foreach($publishers as $publisher)
+          <option value="{{ $publisher->id }}"
+            @if(!$errors->isEmpty())
+              {{old('publisher') == $publisher->id?" selected":""}}
+            @elseif (isset($book))
+              {{$publisher->id == $book->publisher_id?" selected":""}}
+            @endif
+          >{{ $publisher->name }}</option>
+        @endforeach
+      </select>
+      @if( $errors->has('publisher'))
+      <div class="invalid-feedback">
+          {{ $errors->first('publisher') }}
+      </div>
+      @endif
+    </div>
+    <div class="col-2">
+        <a class="btn btn-primary" href="{{ route('publishers.create') }}" target="_blank">New Publisher</a>
+    </div>
+  </div>
+</div>
+<div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control {{ $errors->has('description')?"is-invalid":"" }}" id="description" name="description" rows="10" placeholder="Book Description" required>{{ isset($book)?$book->description:old('description') }}</textarea>
+    @if( $errors->has('description'))
+    <div class="invalid-feedback">
+        {{ $errors->first('description') }}
+=======
     <div class="form-group col-4">
         <label for="author">Author</label>
         <input type="text" class="form-control {{ $errors->has('author')?"is-invalid":"" }}" id="author" name="author" placeholder="Introduce the book author" value="{{ isset($book)?$book->author:old('author') }}"required>
@@ -45,5 +109,6 @@
             <label class="custom-control-label" for="condiciones">Aceptar Terminos y Condiciones</label>
 
         </div>
+>>>>>>> 8c4058232456670ca09b90923d8390c57e97aca3
     </div>
 </div>

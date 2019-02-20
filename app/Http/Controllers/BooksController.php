@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
 use App\Http\Requests\BookRequestAjax;
 use App\Publisher;
+use App\Author;
 
 class BooksController extends Controller
 {
@@ -36,7 +37,8 @@ class BooksController extends Controller
     public function create()
     {
         $publishers = Publisher::all();
-        return view('public.books.create', ['publishers' => $publishers]);
+        $authors = Author::all();
+        return view('public.books.create', ['publishers' => $publishers, 'authors' => $authors]);
     }
 
     /**
@@ -47,15 +49,16 @@ class BooksController extends Controller
      */
     public function store(BookRequest $request)
     {
-        Book::create([
+
+        $book = Book::create([
             'user_id' => $request->user()->id,
             'publisher_id' => $request->publisher,
             'title' => request('title'),
             'slug' => str_slug(request('title'), "-"),
-            'author' => request('author'),
-            'description' => request('description'),
-            'user_id' => $request->user()->id //el id del usuario que esta logueado
+            'description' => request('description')
         ]);
+        //aqui se crean las inserciones en la tabla author_book
+        $book->authors()->sync(request('author'));
 
         return redirect('/');
     }
@@ -82,7 +85,8 @@ class BooksController extends Controller
     public function edit(Book $book)
     {
         $publishers = Publisher::all();
-        return view('public.books.edit', ['book' => $book,'publishers' => $publishers]);
+        $authors = Author::all();
+        return view('public.books.edit', ['book' => $book,'publishers' => $publishers,'authors' => $authors]);
     }
 
     /**
@@ -97,9 +101,11 @@ class BooksController extends Controller
         $book->update([
             'title' => request('title'),
             'slug' => str_slug(request('title'), "-"),
-            'author' => request('author'),
+            'publisher_id' => request('publisher'),
             'description' => request('description')
         ]);
+
+        $book->authors()->sync(request('author'));
 
         return redirect('/books/'.$book->slug);
     }
@@ -112,6 +118,7 @@ class BooksController extends Controller
      */
     public function destroy(Book $book)
     {
+        $book->authors()->detach();
         $book->delete();
 
         return redirect('/');
