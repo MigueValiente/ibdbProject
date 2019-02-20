@@ -34,7 +34,7 @@ class PagesController extends Controller
     }
 
     public function obtenerVista($tab){
-      $vista = "";
+      $vista = null;
       switch ($tab) {
         case 'profile-pill':
           $vista = view('public.profile.data');
@@ -48,5 +48,6 @@ class PagesController extends Controller
         default:
           break;
       }
+      return $vista;
     }
 }

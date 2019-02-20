@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserFormRequest;
+use App\Http\Requests\UserAjaxFormRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserFormRequest;
-use App\Http\Requests\UserAjaxFormRequest;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -58,9 +58,9 @@ class RegisterController extends Controller
         ]);
     }
 
-    protected function validacionUsuarioAjax(UserAjaxFormRequest $request)
-    {
-      return array();
+    protected function validacionUsuarioAjax(UserAjaxFormRequest $request){
+        //Obtenermos todos los valores y devolvemos un array vacio
+        return array();
     }
 
     /**
@@ -72,10 +72,9 @@ class RegisterController extends Controller
     protected function create(UserFormRequest $request)
     {
         return User::create([
-            'name' => $request->input('name'),
-            'slug' => str_slug($request->input('name'),'-'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
+            'name' => request('name'),
+            'email' => request('email'),
+            'password' => Hash::make(request('password')),
         ]);
     }
 }

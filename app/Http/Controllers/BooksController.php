@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Book;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
+use App\Http\Requests\BookRequestAjax;
 use App\Publisher;
 use App\Author;
 
@@ -121,5 +122,38 @@ class BooksController extends Controller
         $book->delete();
 
         return redirect('/');
+    }
+
+    public function crearLibroAjax(BookRequestAjax $request){
+
+      $book = Book::create([
+            'user_id' => $request->user()->id,
+            'publisher_id' => $request->publisher,
+            'title' => request('title'),
+            'slug' => str_slug(request('title'), "-"),
+            'description' => request('description'),
+            'user_id' => $request->user()->id //el id del usuario que esta logueado
+        ]);
+
+
+        return view("public.books.partials.bookData",['book' => $book]);
+    }
+
+    public function nuevoFormulario(){
+        $publishers = Publisher::all();
+        return view('public.books.partials.form', ['publishers' => $publishers]);
+    }
+
+    public function deleteAjax($id){
+        $book = Book::where("id",$id)->firstOrFail();
+
+        $book->delete();
+        return $book->title;
+    }
+
+    public function buscar(){
+            $books = Book::join('author_book','id','=','book_id')->join('authors','author_book.author_id','author_book.author_id')->where('title','like',"%".request('inputBuscador')."%")->orWhere('authors.name','like',"%".request('inputBuscador')."%")->get();
+
+        return view('public.books.partials.bookFormat', ['books' => $books]);
     }
 }

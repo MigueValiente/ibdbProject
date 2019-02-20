@@ -15,4 +15,7 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
    .js('resources/js/validaciones/bookValidation.js', 'public/js/validaciones/')
    .js('resources/js/validaciones/registerValidation.js', 'public/js/validaciones/')
-   .js('resources/js/navs.js', 'public/js/');
+   .js('resources/js/validaciones/validacionRegistro.js', 'public/js/validaciones/')
+   .js('resources/js/navs.js', 'public/js/')
+   .js('resources/js/otherScripts/modalScript.js', 'public/js/otherScripts/')
+   .js('resources/js/otherScripts/search.js', 'public/js/otherScripts/')

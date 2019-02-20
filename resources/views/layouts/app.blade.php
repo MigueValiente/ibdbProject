@@ -72,11 +72,24 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
+                        <!--<li class="nav-item">
                             <a class="nav-link" href="/contact">Contact</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/about">About</a>
+                        </li>-->
+                        <li class="nav-item">
+                            <form class="form-inline mt-1">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" placeholder="Email">
+                                    <input type="password" class="form-control" placeholder="Contraseña">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-sm bg-info" type="button">
+                                            Login
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </li>
                         <!-- Authentication Links -->
                         @guest

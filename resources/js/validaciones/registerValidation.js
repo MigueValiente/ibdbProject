@@ -49,9 +49,8 @@ function gestionarErrores(input,errores){
 function validarFormularioAxios(){
   let datosFormularios = $("#formulario").serialize;
 
-  axios.post("/register/validar",{
-    datosFormularios
-  }).then(function(response){
+  axios.post("/register/validar", datosFormularios)
+    .then(function(response){
     let formularioCorrecto=true;
 
     for(let campo of response.data){

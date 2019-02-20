@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -97,7 +97,7 @@ $(function () {
   $('#myTabPill a').on('show.bs.tab', function (e) {
     axios.get("/obtenerVista/".concat(e.target.id)).then(function (response) {
       $("#div-".concat(e.target.id)).html(response.data);
-      console.log(response);
+      console.log(response.data);
     }).catch(function (error) {
       alert("Ha Habido un Error");
       console.log(error);
@@ -107,7 +107,7 @@ $(function () {
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!************************************!*\
   !*** multi ./resources/js/navs.js ***!
   \************************************/
