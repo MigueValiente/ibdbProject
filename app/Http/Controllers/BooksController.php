@@ -23,7 +23,7 @@ class BooksController extends Controller
     }
     public function index()
     {
-        $books = Book::paginate(10);
+        $books = Book::paginate(5);
 
         return view('public.books.index')->withBooks($books);
     }
@@ -148,5 +148,16 @@ class BooksController extends Controller
             $books = Book::join('author_book','id','=','book_id')->join('authors','author_book.author_id','author_book.author_id')->where('title','like',"%".request('inputBuscador')."%")->orWhere('authors.name','like',"%".request('inputBuscador')."%")->get();
 
         return view('public.books.partials.bookFormat', ['books' => $books]);
+    }
+
+    public function paginar($numElementos){
+        //$books = Book::where('id' , '>', $numElementos)->paginate(5);
+        $books = Book::skip($numElementos)->take(5)->get();
+         sleep(1);
+        $vista = ""; 
+        if(count($books) > 0){
+                $vista = view('public.books.partials.bookFormat',['books' => $books]);
+        }
+        return $vista;
     }
 }
