@@ -20,4 +20,6 @@ mix.js('resources/js/app.js', 'public/js')
    .js('resources/js/otherScripts/modalScript.js', 'public/js/otherScripts/')
    .js('resources/js/otherScripts/search.js', 'public/js/otherScripts/')
    .js('resources/js/otherScripts/paginacion.js', 'public/js/otherScripts/')
+   .js('resources/js/otherScripts/tooltipScript.js', 'public/js/otherScripts/')
+  
 
