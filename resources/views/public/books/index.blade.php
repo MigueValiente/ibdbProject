@@ -38,6 +38,7 @@
 </div>
 @endsection
 @push('scripts')
+    {{-- Script para eliminar elementos --}}
     <script src="{{ asset('js/otherScripts/modalScript.js') }}" defer></script>
     <script src="{{ asset('js/otherScripts/search.js') }}" defer></script>
     <script src="{{ asset('js/otherScripts/paginacion.js') }}" defer></script>

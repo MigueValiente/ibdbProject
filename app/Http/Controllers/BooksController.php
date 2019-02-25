@@ -167,4 +167,19 @@ class BooksController extends Controller
         }
         return $vista;
     }
+
+    public function editarAjax($id, Request $request){
+        $book = Book::where("id",$id)->firstOrFail();
+
+        $book->update([
+            'title' => request('title'),
+            'slug' => str_slug(request('title'), "-"),
+            'publisher_id' => request('publisher'),
+            'description' => request('description')
+        ]);
+
+        $book->authors()->sync(request('author'));
+
+        return 1;
+    }
 }

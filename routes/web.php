@@ -23,6 +23,7 @@ Route::get('/books/nuevoFormulario','BooksController@nuevoFormulario');
 Route::delete('/books/borrarAjax/{idLibro}','BooksController@deleteAjax');
 Route::post('/books/buscarLibrosAjax','BooksController@buscar');
 Route::get('/books/paginar/{numeroElementos}', 'BooksController@paginar');
+Route::put('/books/editarAjax/{idLibro}', 'BooksController@editarAjax');
 
 // Rutas para la entidad Books
 Route::resource('/books', 'BooksController');

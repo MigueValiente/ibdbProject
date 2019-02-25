@@ -7,6 +7,7 @@
     "/js/otherScripts/search.js": "/js/otherScripts/search.js",
     "/js/otherScripts/tooltipScript.js": "/js/otherScripts/tooltipScript.js",
     "/js/validaciones/bookValidation.js": "/js/validaciones/bookValidation.js",
+    "/js/validaciones/editarAjax.js": "/js/validaciones/editarAjax.js",
     "/js/validaciones/registerValidation.js": "/js/validaciones/registerValidation.js",
     "/js/validaciones/validacionRegistro.js": "/js/validaciones/validacionRegistro.js"
 }
