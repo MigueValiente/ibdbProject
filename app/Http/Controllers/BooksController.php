@@ -27,7 +27,7 @@ class BooksController extends Controller
     }
     public function index()
     {
-        $books = Book::paginate(10);
+        $books = Book::latest()->paginate(10);
 
         return view('public.books.index')->withBooks($books);
     }
@@ -51,14 +51,16 @@ class BooksController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(BookRequest $request)
-    {
-
+    {   
+        $cover = $request->file('cover');
+        // dd($cover);
         $book = Book::create([
             'user_id' => $request->user()->id,
             'publisher_id' => $request->publisher,
             'title' => request('title'),
             'slug' => str_slug(request('title'), "-"),
-            'description' => request('description')
+            'description' => request('description'),
+            'cover' => $cover->store('covers','public'),
         ]);
         //aqui se crean las inserciones en la tabla author_book
         $book->authors()->sync(request('author'));
@@ -98,7 +100,7 @@ class BooksController extends Controller
             abort(403);
         }
 
-
+        
         $publishers = Publisher::all();
         $authors = Author::all();
         return view('public.books.edit', ['book' => $book,'publishers' => $publishers,'authors' => $authors]);
@@ -113,11 +115,14 @@ class BooksController extends Controller
      */
     public function update(BookRequest $request, Book $book)
     {
+        $cover = $request->file('cover');
+        
         $book->update([
             'title' => request('title'),
             'slug' => str_slug(request('title'), "-"),
             'publisher_id' => request('publisher'),
-            'description' => request('description')
+            'description' => request('description'),
+            'cover' => $cover->store('covers','public'),
         ]);
 
         $book->authors()->sync(request('author'));

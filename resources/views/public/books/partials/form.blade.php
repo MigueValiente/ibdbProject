@@ -1,11 +1,26 @@
-<div class="form-group">
-    <label for="title">Title</label>
-    <input type="text" class="form-control {{ $errors->has('title')?"is-invalid":"" }}" id="title" name="title" placeholder="Introduce the book title" value="{{ isset($book)?$book->title:old('title') }}" required>
-    @if( $errors->has('title'))
-    <div class="invalid-feedback">
-        {{ $errors->first('title') }}
-    </div>
-    @endif
+<div class="row">
+        <div class="col">
+                <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control {{ $errors->has('title')?"is-invalid":"" }}" id="title" name="title" placeholder="Introduce the book title" value="{{ isset($book)?$book->title:old('title') }}" required>
+                @if( $errors->has('title'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('title') }}
+                </div>
+                @endif
+                </div>
+        </div>
+        <div class="col">
+                <div class="form-group {{ $errors->has('cover')?"is-invalid":"" }}">
+                    <label for="cover">Cover</label>
+                    <input type="file" class="form-control-file mt-1" id="cover" name="cover" required>
+                    @if( $errors->has('cover'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('cover') }}
+                    </div>
+                @endif
+                </div>
+        </div>
 </div>
 <div class="form-group">
     <label for="author">Author</label>
