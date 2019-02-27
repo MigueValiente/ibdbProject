@@ -10,7 +10,7 @@
     </div>
 
     @forelse($books as $book)
-    <div class="card mb-2">
+    <div class="card book-card mb-2">
         <div class="card-header">
             {{ $book->title }}
         </div>
