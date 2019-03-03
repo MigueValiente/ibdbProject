@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
 use App\Publisher;
 use App\Author;
+use App\User;
 use Illuminate\Contracts\Auth\Access\Gate;
+use App\Notifications\BookCreated;
 
 class BooksController extends Controller
 {
@@ -27,7 +29,17 @@ class BooksController extends Controller
     }
     public function index()
     {
-        $books = Book::paginate(10);
+        //El with se usa para precargar los datos del libro. A esto se le llama Eager Loading, lo usado hasta ahora era el lazy loading
+        $books = Book::with(['user','authors','publisher'])
+                            ->latest()
+                            ->paginate(10);
+        
+        // $condition = true;
+
+        // if($condition){
+            //El load postcarga los datos del libro dependiendo si se cumple o no la condicion
+        //     $books=$books->load(['user','authors','publisher'])->latest()->paginate(10);
+        // }
 
         return view('public.books.index')->withBooks($books);
     }
@@ -51,17 +63,22 @@ class BooksController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(BookRequest $request)
-    {
-
+    {   
+        //$cover = $request->file('cover');
+        // dd($cover);
         $book = Book::create([
             'user_id' => $request->user()->id,
             'publisher_id' => $request->publisher,
             'title' => request('title'),
             'slug' => str_slug(request('title'), "-"),
-            'description' => request('description')
+            'description' => request('description'),
+            //'cover' => $cover->store('covers','public'),
         ]);
         //aqui se crean las inserciones en la tabla author_book
         $book->authors()->sync(request('author'));
+
+        $user = User::find(1);
+        $user->notify(new BookCreated($book));
 
         return redirect('/');
     }
@@ -74,7 +91,7 @@ class BooksController extends Controller
      */
     public function show($slug)
     {
-        $book = Book::where('slug', $slug)->firstOrFail();
+        $book = Book::with(['authors','publisher'])->where('slug', $slug)->firstOrFail();
 
         return view('public.books.show', ['book' => $book]);
     }
@@ -98,7 +115,7 @@ class BooksController extends Controller
             abort(403);
         }
 
-
+        
         $publishers = Publisher::all();
         $authors = Author::all();
         return view('public.books.edit', ['book' => $book,'publishers' => $publishers,'authors' => $authors]);
@@ -113,11 +130,14 @@ class BooksController extends Controller
      */
     public function update(BookRequest $request, Book $book)
     {
+        //$cover = $request->file('cover');
+        
         $book->update([
             'title' => request('title'),
             'slug' => str_slug(request('title'), "-"),
             'publisher_id' => request('publisher'),
-            'description' => request('description')
+            'description' => request('description'),
+            //'cover' => $cover->store('covers','public'),
         ]);
 
         $book->authors()->sync(request('author'));

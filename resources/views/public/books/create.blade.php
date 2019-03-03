@@ -4,7 +4,7 @@
 
 @section('content')
 <h1>Add New Book</h1>
-<form action="/books" method="post" novalidate>
+<form action="/books" method="post" enctype="multipart/form-data" novalidate>
 
     @csrf
 
