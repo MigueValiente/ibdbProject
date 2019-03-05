@@ -9,6 +9,12 @@
         {{ $books->links() }}
     </div>
 
+    @if(session('message'))
+        <div class="alert alert-danger" role="alert">
+            {{session('message')}}
+        </div>
+    @endif
+
     @forelse($books as $book)
     <div class="card book-card mb-2">
         <div class="card-header">

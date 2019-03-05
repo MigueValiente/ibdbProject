@@ -25,7 +25,7 @@ class BooksController extends Controller
         $this->middleware('auth',['only' => ['create','store','edit','update','destroy']
         ]);
 
-        //$this->middleware('can:touch,book', ['only' => ['edit','update','destroy']]);
+        $this->middleware('can:touch,book', ['only' => ['edit','update','destroy']]);
     }
     public function index()
     {
@@ -130,19 +130,24 @@ class BooksController extends Controller
      */
     public function update(BookRequest $request, Book $book)
     {
-        //$cover = $request->file('cover');
+        $cover = $request->file('cover');
+
+        if($cover && $book->cover){
+            Storage::disk('public')->delete($book->cover);
+        }
         
         $book->update([
             'title' => request('title'),
             'slug' => str_slug(request('title'), "-"),
             'publisher_id' => request('publisher'),
             'description' => request('description'),
-            //'cover' => $cover->store('covers','public'),
+            'cover' => ($cover?$cover->store('covers','public'):$book->cover),
         ]);
 
         $book->authors()->sync(request('author'));
 
-        return redirect('/books/'.$book->slug);
+        return redirect('/books/'.$book->slug)
+            ->with('message', 'This book has been edited correctly');
     }
 
     /**
@@ -154,13 +159,18 @@ class BooksController extends Controller
     public function destroy(Book $book)
     {
 
-        if(auth()->user()->cannot('touch', $book)){
-            abort(403);
+        if($book->cover){
+            Storage::disk('public')->delete($book->cover);
         }
+
+        // if(auth()->user()->cannot('touch', $book)){
+        //     abort(403);
+        // }
         
         $book->authors()->detach();
         $book->delete();
 
-        return redirect('/');
+        return redirect('/books')
+            ->with('message', 'The book '.$book->title. ' has been deleted.');
     }
 }
