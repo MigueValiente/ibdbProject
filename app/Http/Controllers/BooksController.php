@@ -10,6 +10,7 @@ use App\Author;
 use App\User;
 use Illuminate\Contracts\Auth\Access\Gate;
 use App\Notifications\BookCreated;
+use Illuminate\Support\Facades\Storage;
 
 class BooksController extends Controller
 {
@@ -64,7 +65,7 @@ class BooksController extends Controller
      */
     public function store(BookRequest $request)
     {   
-        //$cover = $request->file('cover');
+        $cover = $request->file('cover');
         // dd($cover);
         $book = Book::create([
             'user_id' => $request->user()->id,
@@ -72,7 +73,7 @@ class BooksController extends Controller
             'title' => request('title'),
             'slug' => str_slug(request('title'), "-"),
             'description' => request('description'),
-            //'cover' => $cover->store('covers','public'),
+            'cover' => $cover->store('covers','public'),
         ]);
         //aqui se crean las inserciones en la tabla author_book
         $book->authors()->sync(request('author'));
@@ -159,7 +160,7 @@ class BooksController extends Controller
     public function destroy(Book $book)
     {
 
-        if($book->cover){
+        if( $book->cover ){
             Storage::disk('public')->delete($book->cover);
         }
 

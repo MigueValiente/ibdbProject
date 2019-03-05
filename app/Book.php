@@ -25,14 +25,14 @@ class Book extends Model
       return $this->belongsToMany(Author::class);
     }
 
-    public function getCoverAttribute($cover)
-    {
-      if(!$cover || starts_with($cover, 'http') ){
-          return $cover;
-      }
+    // public function getCoverAttribute($cover)
+    // {
+    //   if(!$cover || starts_with($cover, 'http') ){
+    //       return $cover;
+    //   }
 
-      return Storage::disk('public')->url($cover);
-    }
+    //   return Storage::disk('public')->url($cover);
+    // }
 
 
 }
