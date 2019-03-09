@@ -11,6 +11,9 @@
                 </div>
         </div>
         <div class="col">
+                @if(isset($book))
+                  <img class="img-fluid" src="{{$book->cover}}" alt="Book's cover">
+                @endif
                 <div class="form-group {{ $errors->has('cover')?"is-invalid":"" }}">
                     <label for="cover">Cover</label>
                     <input type="file" class="form-control-file mt-1" id="cover" name="cover" required>

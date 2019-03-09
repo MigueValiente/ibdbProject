@@ -4,6 +4,7 @@
 
 @section('content')
 <h1>Edit Book</h1>
+
 <form action="/books/{{ $book->id }}" method="post" enctype="multipart/form-data" novalidate>
 
     @csrf
